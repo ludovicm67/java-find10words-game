@@ -34,4 +34,25 @@ public class Word {
     return false;
   }
 
+  // decompose un mot composé en deux
+  public Word[] doubleWords() {
+    String chain = this.getWord();
+    String chain1 = "";
+    String chain2 = "";
+    if (chain.contains("-")) {
+      int t = chain.indexOf('-');
+      for (int i=0; i<t; i++) {
+        chain1 += chain.charAt(i);
+      }
+      for (int j=t+1; j<chain.length(); j++) {
+        chain2 += chain.charAt(j);
+      }
+    }
+    Word[] tab = {
+      new Word(chain1),
+      new Word(chain2),
+    };
+    return tab;
+  }
+
 }

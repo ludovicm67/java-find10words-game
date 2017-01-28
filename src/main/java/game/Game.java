@@ -45,10 +45,10 @@ public class Game {
         System.out.println("Sorry, some letters aren't in the pot.");
       } else if (this.charInString('-', word.getWord())) {
           System.out.println("Good job ! You found two words at once !");
-          this.removeLetters(this.doubleWords(word)[0]);
-          this.removeLetters(this.doubleWords(word)[1]);
-          Word word1 = new Word(this.doubleWords(word)[0]);
-          Word word2 = new Word(this.doubleWords(word)[1]);
+          this.removeLetters(word.doubleWords()[0].getWord());
+          this.removeLetters(word.doubleWords()[1].getWord());
+          Word word1 = word.doubleWords()[0];
+          Word word2 = word.doubleWords()[1];
           p.addWord(word1);
           p.addWord(word2);
           this.pickChar(1);
@@ -132,30 +132,12 @@ public class Game {
   public boolean charInString(char c, String chain) {
     int i;
     for (i=0; i<chain.length(); i++) {
-      if(c == chain.charAt(i)) return true;
+      if (c == chain.charAt(i)) return true;
     }
     return false;
   }
 
-  // decompose un mot composé en deux
-  public String[] doubleWords(Word w) {
-    String chain = w.getWord();
-    String chain1 = "";
-    String chain2 = "";
-    if (this.charInString('-', chain)) {
-      int t = chain.indexOf('-');
-      for (int i=0; i<t; i++) {
-        chain1 += chain.charAt(i);
-      }
-      for (int j=t+1; j<chain.length(); j++) {
-        chain2 += chain.charAt(j);
-      }
-    }
-    String[] tab = {chain1, chain2};
-    return tab;
-  }
-
-  //test if word of one player is in word of other player
+  // test if word of one player is in word of other player
   public boolean wordInWord(Word w, Player p) {
     for (Player player : this.players) {
       if (player != p) {
