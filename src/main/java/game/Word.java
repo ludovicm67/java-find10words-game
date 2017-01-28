@@ -1,9 +1,11 @@
 package game;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class Word {
 
   String word;
+  String fileName = "file/dico.txt";
 
   // constructor
   public Word(String word) {
@@ -17,7 +19,9 @@ public class Word {
 
   // test if a chain is a word
   public boolean is_word() {
-    try (Scanner scanner = new Scanner(App.class.getClassLoader().getResourceAsStream("file/dico.txt"))) {
+    ClassLoader classloader = App.class.getClassLoader();
+    InputStream fileStream = classloader.getResourceAsStream(this.fileName);
+    try (Scanner scanner = new Scanner(fileStream)) {
       while (scanner.hasNextLine()) {
         String line = scanner.nextLine();
         line = line.trim();
