@@ -7,14 +7,22 @@ public class Word {
   private String word;
   private String fileName = "file/dico.txt";
 
-  // constructor
+  // constructors
   public Word(String word) {
     this.word = word;
+  }
+  public Word() {
+    this.word = "";
   }
 
   // get the word
   public String getWord() {
     return this.word;
+  }
+
+  // set the word
+  public void setWord(String w) {
+    this.word = w;
   }
 
   // test if a chain is a word
