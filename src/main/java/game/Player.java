@@ -5,12 +5,16 @@ import java.util.List;
 // Public class which describe a player
 public class Player {
 
-	private String name = "Anonymous";
-	private List<Word> wordsFound;
+	protected String name;
+	protected List<Word> wordsFound;
 
-	// Constructor
+	// Constructors
 	public Player(String name) {
 		this.name = name;
+		this.wordsFound = new ArrayList<Word>();
+	}
+	public Player() {
+		this.name = "Anonymous";
 		this.wordsFound = new ArrayList<Word>();
 	}
 
@@ -22,6 +26,11 @@ public class Player {
 	// Add a word that a player found
 	public void addWord(Word word) {
 		this.wordsFound.add(word);
+	}
+
+	// remove word to a player
+	public void removeWord(Word w) {
+		this.wordsFound.remove(w);
 	}
 
 	// Get the list of all words the player founds

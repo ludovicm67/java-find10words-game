@@ -41,8 +41,22 @@ public class Game {
 	  if (word.isWord()) {
 		if (this.verifyFindWord(word, p)) {
 			System.out.println("Sorry, the word has been already found.");
-		} else if (!(this.verifyLetters(word.getWord()))) {
+		} else if (!this.verifyLetters(word.getWord())) {
 			System.out.println("Sorry, some letters aren't in the pot.");
+		} else if (this.charInString('-', word.getWord())) {
+				System.out.println("Good job ! You found two words at once !");
+				this.removeLetters(this.doubleWords(word)[0]);
+				this.removeLetters(this.doubleWords(word)[1]);
+				Word word1 = new Word(this.doubleWords(word)[0]);
+				Word word2 = new Word(this.doubleWords(word)[1]);
+				p.addWord(word1);
+				p.addWord(word2);
+				this.pickChar(1);
+		} else if (this.wordInWord(word, p)) {
+			System.out.println("Good job ! You found a word and you stole a word from a player !");
+			this.removeLetters(word.getWord());
+			p.addWord(word);
+			this.pickChar(1);
 		} else {
 			System.out.println("Good job !");
 			this.removeLetters(word.getWord());
@@ -54,9 +68,7 @@ public class Game {
 
 	// remove letters in pot
 	public void removeLetters(String chain) {
-		int i;
-		int j = 0;
-		for (i = 0; i < chain.length(); i++) {
+		for (int i = 0; i < chain.length(); i++) {
 			int nb = (int) (chain.charAt(i));
 			char c = (char) (nb - 32);
 			if (verifyCharInPot(c)) {
@@ -69,18 +81,20 @@ public class Game {
 	public boolean verifyCharInPot(char c) {
 		for (Character letter : this.pot) {
 			if (letter == c) return true;
+			else if (c == '-') return true;
 		}
 		return false;
 	}
 
 	// Verify if letters of word are in the pot
 	public boolean verifyLetters(String chain) {
-		int i;
-		int j = 0;
-		for (i = 0; i < chain.length(); i++) {
-			int nb = (int) (chain.charAt(i));
-			char c = (char) (nb - 32);
-			if(!(verifyCharInPot(c))) return false;
+		char c;
+		for (int i = 0; i < chain.length(); i++) {
+			if (chain.charAt(i) != '-') {
+				int nb = (int) (chain.charAt(i));
+				c = (char) (nb - 32);
+			} else c = '-';
+			if(!verifyCharInPot(c)) return false;
 		}
 		return true;
 	}
@@ -96,21 +110,66 @@ public class Game {
 	// Allow to one player to play
 	public void play(Player p) {
 		Scanner rep = new Scanner(System.in);
-		this.pickChar(2);
 		System.out.println("\n\n\033[0;1mIt's " + p.getName() + "'s turn.\033[0m");
 		System.out.println("There are currently in the pot :");
 		for (Character c : this.pot) System.out.print(" " + c);
 		System.out.println("\nDo you want to do a word ? (yes/no)");
 		String answer = rep.next();
 		if (answer.equals("yes")) {
+			this.pickChar(2);
 			System.out.print("Please write the word : ");
 			String w = rep.next();
 			w = w.toLowerCase();
 			Word word = new Word(w);
 			this.verify(word, p);
+		} else if (answer.equals("no")) {
+			this.pickChar(2);
+			System.out.println("Next turn.");
+		} else this.play(p);
+	}
+
+	// test if a char is in a string
+	public boolean charInString(char c, String chain) {
+		int i;
+		for (i=0; i<chain.length(); i++) {
+			if(c == chain.charAt(i)) return true;
 		}
-		else if(answer.equals("no")) System.out.println("Next turn.");
-		else this.play(p);
+		return false;
+	}
+
+	// decompose un mot composé en deux
+	public String[] doubleWords(Word w) {
+		String chain = w.getWord();
+		String chain1 = "";
+		String chain2 = "";
+		if (this.charInString('-', chain)) {
+			int t = chain.indexOf('-');
+			for (int i=0; i<t; i++) {
+				chain1 += chain.charAt(i);
+			}
+			for (int j=t+1; j<chain.length(); j++) {
+				chain2 += chain.charAt(j);
+			}
+		}
+		String[] tab = {chain1, chain2};
+		return tab;
+	}
+
+	//test if word of one player is in word of other player
+	public boolean wordInWord(Word w, Player p) {
+		for (Player player : this.players) {
+			if (player != p) {
+				for (Word word : player.wordsFound) {
+					if (w.getWord().length() > word.getWord().length()) {
+						if (w.getWord().contains(word.getWord())) {
+							player.removeWord(word);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	// Management of game turns
