@@ -1,5 +1,6 @@
 package game;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Public class which describe a player
 public class Player {
@@ -37,4 +38,5 @@ public class Player {
 	public int nbWords() {
 		return this.wordsFound.size();
 	}
+
 }
