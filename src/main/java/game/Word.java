@@ -1,24 +1,13 @@
 package game;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.Scanner;
 
 public class Word {
 
   String word;
 
   // constructor
-  public Word() {
-    this.word = "??";
-  }
-
-  // constructor
-  public Word(String chain) {
-    if (chain.length() > 1) {
-      this.word = chain;
-    } else {
-      this.word = "??";
-    }
+  public Word(String word) {
+    this.word = word;
   }
 
   // get the word
@@ -28,16 +17,16 @@ public class Word {
 
   // test if a chain is a word
   public boolean is_word() {
-    try (BufferedReader buffer = new BufferedReader(new FileReader("/home/eloise/jeux-java/java2/dico.txt"))) {
-      String line = buffer.readLine();
-      while (line != null) {
+    try (Scanner scanner = new Scanner(App.class.getClassLoader().getResourceAsStream("file/dico.txt"))) {
+      while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
         line = line.trim();
-        if (line.equals(this.word)) {
-          return true;
-        }
-        line = buffer.readLine();
+        if (line.equals(this.word.trim())) return true;
       }
-    } catch(IOException e) {}
+      scanner.close();
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
     return false;
   }
 
