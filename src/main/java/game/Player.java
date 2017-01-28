@@ -29,6 +29,11 @@ public class Player {
 		this.wordsFound.add(word);
 	}
 
+	// remove word to a player
+	public void removeWord(Word w){
+		this.wordsFound.remove(w);
+	}
+
 	// Get the list of all words the player founds
 	public List<Word> getWords() {
 		return this.wordsFound;
