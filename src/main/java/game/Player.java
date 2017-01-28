@@ -10,13 +10,8 @@ public class Player {
 
 	// Constructor
 	public Player(String name) {
-		this.setName(name);
-		this.wordsFound = new ArrayList<Word>();
-	}
-
-	// Define player's name
-	public void setName(String name) {
 		this.name = name;
+		this.wordsFound = new ArrayList<Word>();
 	}
 
 	// Get player's name

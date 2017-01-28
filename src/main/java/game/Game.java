@@ -7,8 +7,8 @@ import java.util.Scanner;
 // Public class which describe a the game
 public class Game {
 
-	public List<Player> players;
-	public List<Character> pot;
+	private List<Player> players;
+	private List<Character> pot;
 
 	// Constructor
 	public Game() {
@@ -18,11 +18,11 @@ public class Game {
 
 	// Initialize a new game
 	public void start() {
-		System.out.println("How many players ?");
+		System.out.print("How many players ? ");
 		Scanner sc = new Scanner(System.in);
 		int nbPlayers = sc.nextInt();
 		for (int i = 0; i < nbPlayers; i++) {
-			System.out.println("Entrez le nom du joueur " + (i+1) + " :");
+			System.out.print("Enter player " + (i+1) + "'s name : ");
 			String name = sc.next();
 			Player p = new Player(name);
 			this.addPlayer(p);
@@ -31,14 +31,14 @@ public class Game {
 		while(!this.hasSomeoneWon()) {
 			for (Player p : this.players) {
 				this.play(p);
-				this.debug();
+				this.printCurrentState();
 			}
 		}
 	}
 
 	// Verify the word of player
 	public void verify(Word word, Player p) {
-	  if (word.is_word()) {
+	  if (word.isWord()) {
 		if (this.verifyFindWord(word, p)) {
 			System.out.println("Sorry, the word has been already found.");
 		} else if (!(this.verifyLetters(word.getWord()))) {
@@ -68,9 +68,7 @@ public class Game {
 	// Verify if char in the pot
 	public boolean verifyCharInPot(char c) {
 		for (Character letter : this.pot) {
-			if (letter == c) {
-				return true;
-			}
+			if (letter == c) return true;
 		}
 		return false;
 	}
@@ -99,20 +97,19 @@ public class Game {
 	public void play(Player p) {
 		Scanner rep = new Scanner(System.in);
 		this.pickChar(2);
-		System.out.println("C'est au tour de " + p.getName() + ".");
+		System.out.println("\n\n\033[0;1mIt's " + p.getName() + "'s turn.\033[0m");
 		System.out.println("There are currently in the pot :");
-		for (Character c : this.pot) System.out.print(c + " ");
-		System.out.println();
-		System.out.println("Do you want to do a word ? (yes/no)");
+		for (Character c : this.pot) System.out.print(" " + c);
+		System.out.println("\nDo you want to do a word ? (yes/no)");
 		String answer = rep.next();
 		if (answer.equals("yes")) {
-			System.out.println("Write the word please.");
+			System.out.print("Please write the word : ");
 			String w = rep.next();
 			w = w.toLowerCase();
 			Word word = new Word(w);
 			this.verify(word, p);
 		}
-		else if(answer.equals("no")) System.out.println("Tour suivant.");
+		else if(answer.equals("no")) System.out.println("Next turn.");
 		else this.play(p);
 	}
 
@@ -131,7 +128,7 @@ public class Game {
 		return this.players.size();
 	}
 
-	// Number of pot
+	// Number of characters in pot
 	public int nbChars() {
 		return this.pot.size();
 	}
@@ -158,8 +155,8 @@ public class Game {
 	}
 
 	// Informations about the current state of the game
-	public void debug() {
-		System.out.println("\n======DEBUG======");
+	public void printCurrentState() {
+		System.out.println("\n======== CURRENT STATE ========");
 		int nb = this.nbPlayers();
 		if(nb > 1) System.out.println("There are currently " + nb + " players :");
 		else if(nb == 1) System.out.println("There is currently " + nb + " player :");
@@ -170,6 +167,7 @@ public class Game {
 				System.out.println("        - " + w.getWord());
 			}
 		}
+		System.out.println("============= END =============");
 	}
 
 }

@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Word {
 
-  String word;
-  String fileName = "file/dico.txt";
+  private String word;
+  private String fileName = "file/dico.txt";
 
   // constructor
   public Word(String word) {
@@ -18,7 +18,7 @@ public class Word {
   }
 
   // test if a chain is a word
-  public boolean is_word() {
+  public boolean isWord() {
     ClassLoader classloader = App.class.getClassLoader();
     InputStream fileStream = classloader.getResourceAsStream(this.fileName);
     try (Scanner scanner = new Scanner(fileStream)) {
