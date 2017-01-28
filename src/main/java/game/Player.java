@@ -5,8 +5,8 @@ import java.util.List;
 // Public class which describe a player
 public class Player {
 
-	private String name = "Anonymous";
-	private List<Word> wordsFound;
+	protected String name = "Anonymous";
+	protected List<Word> wordsFound;
 
 	// Constructor
 	public Player(String name) {
