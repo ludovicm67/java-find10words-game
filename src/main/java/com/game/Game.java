@@ -113,20 +113,19 @@ public class Game {
   public void play(Player p) {
     Scanner rep = new Scanner(System.in);
     System.out.println("\n\n\033[0;1mIt's " + p.getName() + "'s turn.\033[0m");
+    this.pot.pickChar(2);
     this.pot.print();
     System.out.println("Do you want to do a word ? (yes/no)");
     String answer = rep.next();
     if (answer.equals("yes")) {
-      this.pot.pickChar(2);
       System.out.print("Please write the word : ");
       String w = rep.next();
       w = w.toLowerCase();
       Word word = new Word(w);
       this.verify(word, p);
-    } else if (answer.equals("no")) {
-      this.pot.pickChar(2);
+    } else {
       System.out.println("Next turn.");
-    } else this.play(p);
+    }
   }
 
   // test if a char is in a string
