@@ -1,6 +1,6 @@
 # Comment compiler et lancer le projet ?
 
-Pour compiler et lancer ce projet, vous devez avoir au minimum Java 7 sur votre machine (+ javac).
+Pour compiler et lancer ce projet, vous devez avoir au minimum Java 8 sur votre machine (+ javac).
 
 Il vous faudra aussi avoir Maven (installable sur Ubuntu avec un simple `sudo apt install maven`).
 

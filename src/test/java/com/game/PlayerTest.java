@@ -22,7 +22,7 @@ public class PlayerTest {
     assertThat(p.getWords().get(1).getWord()).isEqualTo("monde");
   }
 
-  @Test // Need testAddWord() to be OK
+  @Test
   public void testNbWords() {
     Player p = new Player();
     assertThat(p.nbWords()).isEqualTo(0);
