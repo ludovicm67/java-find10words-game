@@ -38,6 +38,21 @@ public class Pot {
     return (char) (65 + r.nextInt(26));
   }
 
+  // Pick a random char (A-Z) and put it in the pot
+  public char pickChar() {
+    char c = this.randomChar();
+    this.add(c);
+    return c;
+  }
+
+  // Pick n random char (A-Z) and put them in the pot
+  public void pickChar(int n) {
+    while (n > 0) {
+      this.pickChar();
+      n--;
+    }
+  }
+
   // Verify if a char is contained in the pot
   public boolean contains(Character c) {
     return this.content.contains(c) || c == '-';

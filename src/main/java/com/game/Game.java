@@ -12,9 +12,10 @@ public class Game {
   // Initialize a new game
   public void start() {
     this.setUp();
-    int nbPlayers = this.nbPlayers();
-    for (int i = 0; i < nbPlayers; i++) {
-      this.pickChar(1);
+    for (Player p : this.players) {
+      System.out.println(
+        p.getName() + " has picked the letter " + this.pot.pickChar()
+      );
     }
     while(!this.hasSomeoneWon()) {
       for (Player p : this.players) {
@@ -36,6 +37,7 @@ public class Game {
       System.out.print("Enter player " + (i+1) + "'s name : ");
       this.addPlayer(new Player(sc.next()));
     }
+    System.out.println();
   }
 
   // Add Glados IA
@@ -48,6 +50,7 @@ public class Game {
   // Verify the word of player
   public void verify(Word word, Player p) {
     if (word.isWord()) {
+      Pot pot = this.pot;
       if (this.verifyFindWord(word, p)) {
         System.out.println("Sorry, you already found this word.");
       } else if (!this.verifyLetters(word.getWord())) {
@@ -60,17 +63,17 @@ public class Game {
           Word word2 = word.doubleWords()[1];
           p.addWord(word1);
           p.addWord(word2);
-          this.pickChar(1);
+          pot.pickChar();
       } else if (this.wordInWord(word, p)) {
         System.out.println("Good job ! You found a word and you stole a word from a player !");
         this.removeLetters(word.getWord());
         p.addWord(word);
-        this.pickChar(1);
+        pot.pickChar();
       } else {
         System.out.println("Good job !");
         this.removeLetters(word.getWord());
         p.addWord(word);
-        this.pickChar(1);
+        pot.pickChar();
       }
     } else System.out.println("Sorry, isn't a word.");
   }
@@ -114,14 +117,14 @@ public class Game {
     System.out.println("Do you want to do a word ? (yes/no)");
     String answer = rep.next();
     if (answer.equals("yes")) {
-      this.pickChar(2);
+      this.pot.pickChar(2);
       System.out.print("Please write the word : ");
       String w = rep.next();
       w = w.toLowerCase();
       Word word = new Word(w);
       this.verify(word, p);
     } else if (answer.equals("no")) {
-      this.pickChar(2);
+      this.pot.pickChar(2);
       System.out.println("Next turn.");
     } else this.play(p);
   }
@@ -151,22 +154,9 @@ public class Game {
     return false;
   }
 
-  // Management of game turns
-  public void round() {
-    for(Player p : this.players) this.play(p);
-  }
-
   // Add a player
   public void addPlayer(Player p) {
     this.players.add(p);
-  }
-
-  // Pick a random char (A-Z) and put it in the pot
-  public void pickChar(int nb) {
-    while (nb > 0) {
-      this.pot.add(this.pot.randomChar());
-      nb--;
-    }
   }
 
   // We have a Winner ! :D
