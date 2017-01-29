@@ -142,11 +142,10 @@ public class Game {
     for (Player player : this.players) {
       if (player != p) {
         for (Word word : player.wordsFound) {
-          if (w.getWord().length() > word.getWord().length()) {
-            if (w.getWord().contains(word.getWord())) {
-              player.removeWord(word);
-              return true;
-            }
+          if (w.getWord().length() > word.getWord().length()
+              && w.getWord().contains(word.getWord())) {
+            player.removeWord(word);
+            return true;
           }
         }
       }

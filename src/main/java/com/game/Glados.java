@@ -1,6 +1,4 @@
 package com.game;
-import java.util.ArrayList;
-import java.util.List;
 
 // Public class which describe IA
 public class Glados extends Player {
