@@ -25,7 +25,7 @@ public class Pot {
   // Remove letters from the pot
   public void remove(String chain) {
     for (int i = 0; i < chain.length(); i++) {
-      char c = Character.toLowerCase(chain.charAt(i));
+      char c = Character.toUpperCase(chain.charAt(i));
       if (this.contains(c)) {
         this.content.remove(this.content.indexOf(c));
       }

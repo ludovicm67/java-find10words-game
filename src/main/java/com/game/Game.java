@@ -4,28 +4,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-// Public class which describe a the game
+// Public class which describe the game
 public class Game {
 
-  private List<Player> players;
-  private Pot pot;
-
-  // Constructor
-  public Game() {
-    this.players = new ArrayList<Player>();
-    this.pot = new Pot();
-  }
+  private List<Player> players = new ArrayList<Player>();
+  private Pot pot = new Pot();
 
   // Initialize a new game
   public void start() {
-    System.out.print("How many players ? ");
-    Scanner sc = new Scanner(System.in);
-    int nbPlayers = sc.nextInt();
+    this.setUp();
+    int nbPlayers = this.nbPlayers();
     for (int i = 0; i < nbPlayers; i++) {
-      System.out.print("Enter player " + (i+1) + "'s name : ");
-      String name = sc.next();
-      Player p = new Player(name);
-      this.addPlayer(p);
       this.pickChar(1);
     }
     while(!this.hasSomeoneWon()) {
@@ -36,11 +25,27 @@ public class Game {
     }
   }
 
+  // Set up a new game (ask for required parameters)
+  public void setUp() {
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Do you want to play with Glados, an IA ? (yes/no) : ");
+    String answer = sc.next();
+    if (answer.equals("yes")) {
+      // @TODO : add Glados here
+    }
+    System.out.print("How many (human) players ? ");
+    int nbPlayers = sc.nextInt();
+    for (int i = 0; i < nbPlayers; i++) {
+      System.out.print("Enter player " + (i+1) + "'s name : ");
+      this.addPlayer(new Player(sc.next()));
+    }
+  }
+
   // Verify the word of player
   public void verify(Word word, Player p) {
     if (word.isWord()) {
       if (this.verifyFindWord(word, p)) {
-        System.out.println("Sorry, the word has been already found.");
+        System.out.println("Sorry, you already found this word.");
       } else if (!this.verifyLetters(word.getWord())) {
         System.out.println("Sorry, some letters aren't in the pot.");
       } else if (this.charInString('-', word.getWord())) {
