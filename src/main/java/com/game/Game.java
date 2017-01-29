@@ -1,7 +1,6 @@
 package com.game;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 // Public class which describe the game
@@ -30,15 +29,20 @@ public class Game {
     Scanner sc = new Scanner(System.in);
     System.out.print("Do you want to play with Glados, an IA ? (yes/no) : ");
     String answer = sc.next();
-    if (answer.equals("yes")) {
-      // @TODO : add Glados here
-    }
+    if (answer.equals("yes")) this.addGlados();
     System.out.print("How many (human) players ? ");
     int nbPlayers = sc.nextInt();
     for (int i = 0; i < nbPlayers; i++) {
       System.out.print("Enter player " + (i+1) + "'s name : ");
       this.addPlayer(new Player(sc.next()));
     }
+  }
+
+  // Add Glados IA
+  public void addGlados() {
+    Player glados = new Player("Glados [IA]");
+    glados.setIA();
+    this.addPlayer(glados);
   }
 
   // Verify the word of player
@@ -135,7 +139,7 @@ public class Game {
   public boolean wordInWord(Word w, Player p) {
     for (Player player : this.players) {
       if (player != p) {
-        for (Word word : player.wordsFound) {
+        for (Word word : player.getWords()) {
           if (w.getWord().length() > word.getWord().length()
               && w.getWord().contains(word.getWord())) {
             player.removeWord(word);
