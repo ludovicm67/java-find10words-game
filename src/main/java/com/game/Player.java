@@ -28,7 +28,7 @@ public class Player {
     this.wordsFound.add(word);
   }
 
-  // remove word to a player
+  // Remove word to a player
   public void removeWord(Word w) {
     this.wordsFound.remove(w);
   }
