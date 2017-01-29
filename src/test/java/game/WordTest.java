@@ -3,7 +3,7 @@ package game;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class WordTest {
 
@@ -11,31 +11,31 @@ public class WordTest {
   public void testGetWord() {
     String str = "test";
     Word w = new Word(str);
-    assertEquals(w.getWord(), str);
+    assertThat(w.getWord()).isEqualTo(str);
   }
 
-  @Test
+  @Test // Need testGetWord() to be OK
   public void testSetWord() {
     Word w = new Word();
     String str = "test";
     w.setWord(str);
-    assertEquals(w.getWord(), str);
+    assertThat(w.getWord()).isEqualTo(str);
   }
 
   @Test
   public void testIsWord() {
     Word w = new Word("test");
-    assertTrue(w.isWord());
+    assertThat(w.isWord()).isTrue();
     w = new Word("test-false");
-    assertFalse(w.isWord());
+    assertThat(w.isWord()).isFalse();
   }
 
-  @Test
+  @Test // Need testGetWord() to be OK
   public void testDoubleWords() {
     Word w = new Word("bonjour-monde");
     Word[] ws = w.doubleWords();
-    assertEquals(ws[0].getWord(), "bonjour");
-    assertEquals(ws[1].getWord(), "monde");
+    assertThat(ws[0].getWord()).isEqualTo("bonjour");
+    assertThat(ws[1].getWord()).isEqualTo("monde");
   }
 
 }
