@@ -8,12 +8,12 @@ import java.util.Scanner;
 public class Game {
 
   private List<Player> players;
-  private List<Character> pot;
+  private Pot pot;
 
   // Constructor
   public Game() {
     this.players = new ArrayList<Player>();
-    this.pot = new ArrayList<Character>();
+    this.pot = new Pot();
   }
 
   // Initialize a new game
@@ -68,22 +68,12 @@ public class Game {
 
   // remove letters in pot
   public void removeLetters(String chain) {
-    for (int i = 0; i < chain.length(); i++) {
-      int nb = (int) (chain.charAt(i));
-      char c = (char) (nb - 32);
-      if (verifyCharInPot(c)) {
-        this.pot.remove(this.pot.indexOf(c));
-      }
-    }
+    this.pot.remove(chain);
   }
 
   // Verify if char in the pot
   public boolean verifyCharInPot(char c) {
-    for (Character letter : this.pot) {
-      if (letter == c) return true;
-      else if (c == '-') return true;
-    }
-    return false;
+    return this.pot.contains(c);
   }
 
   // Verify if letters of word are in the pot
@@ -111,9 +101,8 @@ public class Game {
   public void play(Player p) {
     Scanner rep = new Scanner(System.in);
     System.out.println("\n\n\033[0;1mIt's " + p.getName() + "'s turn.\033[0m");
-    System.out.println("There are currently in the pot :");
-    for (Character c : this.pot) System.out.print(" " + c);
-    System.out.println("\nDo you want to do a word ? (yes/no)");
+    this.pot.print();
+    System.out.println("Do you want to do a word ? (yes/no)");
     String answer = rep.next();
     if (answer.equals("yes")) {
       this.pickChar(2);
@@ -163,22 +152,10 @@ public class Game {
     this.players.add(p);
   }
 
-  // Number of players
-  public int nbPlayers() {
-    return this.players.size();
-  }
-
-  // Number of characters in pot
-  public int nbChars() {
-    return this.pot.size();
-  }
-
   // Pick a random char (A-Z) and put it in the pot
   public void pickChar(int nb) {
     while (nb > 0) {
-      Random r = new Random();
-      char c = (char) (65 + r.nextInt(26));
-      this.pot.add(c);
+      this.pot.add(this.pot.randomChar());
       nb--;
     }
   }
@@ -192,6 +169,11 @@ public class Game {
       }
     }
     return false;
+  }
+
+  // Number of players
+  public int nbPlayers() {
+    return this.players.size();
   }
 
   // Informations about the current state of the game
