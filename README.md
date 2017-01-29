@@ -10,10 +10,20 @@ Placez-vous dans le dossier principal, et lancez :
   * `mvn -q compile && mvn -q exec:java` pour lancer la compilation et l'éxécution en une ligne de commande
   * `mvn -q test` pour lancer l'ensemble des tests unitaires
 
+# Description de l'architecture
+
+Nous avons utilisé `Maven` pour la gestion du projet.
+Nous travaillons avec un seul package, `com.game`, mais l'ensemble du projet est découpé en différentes classes :
+  * `App` : Permet d'initialiser le jeu
+  * `Game` : Tout ce qui concerne les mécaniques de jeu, l'évolution de la partie : la classe centrale
+  * `Glados` : pour l'IA
+  * `Player` : pour définir chaque joueur (son nom, les mots qu'il a trouvé, ...)
+  * `Word` : pour définir un mot, voir s'il est valide, etc...
+
 # Avancement
 
   * Règles du jeu : 9 /12
-  * Objectifs du TP : 2 /5
+  * Objectifs du TP : 3 /5
   * *Technologies à utiliser : 4 /4*
 
 # Règles du jeu
@@ -45,7 +55,7 @@ Placez-vous dans le dossier principal, et lancez :
   * Nous attendons aussi a minima une de ces deux extensions (ou les deux pour les plus courageux) :
     * *Une architecture client/serveur, chaque joueur utilisant une instance d'un client pour jouer.*
     * **Une intelligence artificielle permettant de jouer contre l'ordinateur** (notre choix)
-  * **Nous attendons aussi une description de votre architecture (quelle responsabilité à chaque package,...)**
+  * Nous attendons aussi une description de votre architecture (quelle responsabilité à chaque package,...)
   * **A répondre dans le README.md : illustrer 3 principes SOLID ou design pattern en quelques paragraphes seulement en utilisant vos propres classes, en espliquant pourquoi avoir utilisé ce design pattern/principe, ce que cela vous a apporté et comment l'avez-vous appliqué**
 
 # Technologies à utiliser
