@@ -1,4 +1,4 @@
-package game;
+package com.game;
 
 // App class
 public class App {

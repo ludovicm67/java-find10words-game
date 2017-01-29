@@ -1,4 +1,4 @@
-package game;
+package com.game;
 import java.io.InputStream;
 import java.util.Scanner;
 
