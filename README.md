@@ -9,6 +9,8 @@ Placez-vous dans le dossier principal, et lancez :
   * `mvn -q exec:java` pour éxécuter le programme.
   * `mvn -q compile && mvn -q exec:java` pour lancer la compilation et l'éxécution en une ligne de commande
   * `mvn -q test` pour lancer l'ensemble des tests unitaires
+  * `mvn mvn pmd:check` pour effectuer une vérification PMD (le rapport PMD sera fournit dans `target/pmd.xml` pour la version xml, et dans `target/site/pmd.html` pour la version web)
+  * `mvn -q jxr:jxr && mvn -q pmd:check || xdg-open ./target/site/pmd.html` pour générer le rapport PMD, avec les références aux lignes, et ouvre le rapport dans le navigateur.
 
 # Description de l'architecture
 
