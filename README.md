@@ -10,6 +10,11 @@ Placez-vous dans le dossier principal, et lancez :
   * `mvn -q compile && mvn -q exec:java` pour lancer la compilation et l'éxécution en une ligne de commande
   * `mvn -q test` pour lancer l'ensemble des tests unitaires
 
+# Avancement
+
+  * Règles du jeu : 9 /12
+  * Objectifs du TP : 2 /5
+  * *Technologies à utiliser : 4 /4*
 
 # Règles du jeu
 
@@ -39,7 +44,7 @@ Placez-vous dans le dossier principal, et lancez :
   * Une interface en ligne de commande est suffisante.
   * Nous attendons aussi a minima une de ces deux extensions (ou les deux pour les plus courageux) :
     * *Une architecture client/serveur, chaque joueur utilisant une instance d'un client pour jouer.*
-    * **Une intelligence artificielle permettant de jouer contre l'ordinateur**
+    * **Une intelligence artificielle permettant de jouer contre l'ordinateur** (notre choix)
   * **Nous attendons aussi une description de votre architecture (quelle responsabilité à chaque package,...)**
   * **A répondre dans le README.md : illustrer 3 principes SOLID ou design pattern en quelques paragraphes seulement en utilisant vos propres classes, en espliquant pourquoi avoir utilisé ce design pattern/principe, ce que cela vous a apporté et comment l'avez-vous appliqué**
 
@@ -49,8 +54,8 @@ Placez-vous dans le dossier principal, et lancez :
     * plusieurs commits par personne sont attendus
   * Le projet doit être rendu en Java
   * Le projet devra pouvoir être compilé et lancé en ligne de commande (sans IDE) :
-    * L'utilisation de `Maven` ou `Gradle` est recommandé
+    * L'utilisation de `Maven` ou `Gradle` est recommandé (utilisation de `Maven` dans le projet)
     * cela ne sert à rien de commiter une jar. Nous n'exécuterons que du code compilé par nous-même.
   * Le projet doit contenir des tests unitaires
-    * Utilisation de `JUnit` ou `Test-ng`
-    * L'utilisation des librairies comme `assertJ` et `Mockito` est recommandé.
+    * Utilisation de `JUnit` ou `Test-ng` (utilisation de `JUnit` dans le projet)
+    * L'utilisation des librairies comme `assertJ` et `Mockito` est recommandé. (utilisation de `assertJ` dans le projet)
