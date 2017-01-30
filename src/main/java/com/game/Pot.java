@@ -32,6 +32,11 @@ public class Pot {
     }
   }
 
+  // Get content of the pot
+  public List<Character> getContent() {
+    return this.content;
+  }
+
   // Get a random char
   public char randomChar() {
     Random r = new Random();

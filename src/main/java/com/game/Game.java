@@ -9,6 +9,8 @@ public class Game {
   private List<Player> players = new ArrayList<Player>();
   private Pot pot = new Pot();
 
+  private List<Word> pieceofword; // for Glados
+
   // Initialize a new game
   public void start() {
     this.setUp();
@@ -188,6 +190,30 @@ public class Game {
       }
     }
     System.out.println("============= END =============");
+  }
+
+  // Try to do a word (for Glados)
+  public Word makeWord() {
+    Word wd = new Word();
+    this.pieceofword = new ArrayList<Word>();
+    int i = 0;
+    String word = "";
+    for (Character letter : this.pot.getContent()) {
+      System.out.println("plop");
+      if (wd.searchWordinDico(letter, i)) {
+        word += letter;
+        System.out.println(word);
+      }
+      i++;
+    }
+    for (Word mot : this.pieceofword) {
+      System.out.println(mot);
+    }
+    Word w = new Word(word);
+    this.pieceofword.add(w);
+    if (w.isWord()) return w;
+    Word wEmpty = new Word("");
+    return wEmpty;
   }
 
 }

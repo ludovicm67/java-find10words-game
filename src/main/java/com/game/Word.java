@@ -57,4 +57,25 @@ public class Word {
     return tab;
   }
 
+  // test if a word in the pot is in the dico with this indice
+  public boolean searchWordinDico(char l, int indice) {
+    ClassLoader classloader = App.class.getClassLoader();
+    InputStream fileStream = classloader.getResourceAsStream(this.fileName);
+    try (Scanner scanner = new Scanner(this.fileName)) {
+      while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        line = line.trim();
+        System.out.println(line);
+        if (line.charAt(indice) == l) {
+          System.out.println("lol");
+          return true;
+        }
+      }
+      scanner.close();
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
 }
