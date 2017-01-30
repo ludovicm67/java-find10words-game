@@ -1,5 +1,6 @@
 package com.game;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,18 +14,64 @@ public class Game {
 
   // Initialize a new game
   public void start() {
-    this.setUp();
-    for (Player p : this.players) {
-      System.out.println(
-        p.getName() + " has picked the letter " + this.pot.pickChar()
-      );
+
+
+
+    this.pot.add('A');
+    this.pot.add('B');
+    this.pot.add('C');
+    this.pot.add('D');
+    this.pot.add('E');
+    this.pot.add('F');
+
+    ArrayList<String> po=new ArrayList<String >();
+    ArrayList<String> po2=new ArrayList<String >();
+    ArrayList<String> pan= new ArrayList<String >();
+
+
+
+    // Tranforme les lettres du pot commun en String en minuscule
+    for (Character letter : this.pot.getContent()) {
+      po.add("" + Character.toLowerCase(letter));
     }
-    while(!this.hasSomeoneWon()) {
-      for (Player p : this.players) {
-        this.play(p);
-        this.printCurrentState();
-      }
+
+    pan = this.test(po); // n
+    if (po.size() > 0) pan.addAll(this.test2(po));
+
+    // Permet de virer tous les doublons
+    Object[] st = pan.toArray();
+    for (Object s : st) {
+      if (pan.indexOf(s) != pan.lastIndexOf(s)) {
+          pan.remove(pan.lastIndexOf(s));
+       }
     }
+
+    // int nb = po.size();
+    // po2.addAll(po); // n-1
+    // for (int i = 0; i < nb; i++) {
+    //   String f = po2.get(0);
+    //   po2.remove(0);
+    //   pan.addAll(this.test(po2));
+    //   pan.addAll(this.test2(po2));
+    //   po2.add(f);
+    // }
+
+    for (int i = 0; i < pan.size(); i++) {
+      System.out.println(pan.get(i));
+    }
+    System.out.println(pan.size());
+    // this.setUp();
+    // for (Player p : this.players) {
+    //   System.out.println(
+    //     p.getName() + " has picked the letter " + this.pot.pickChar()
+    //   );
+    // }
+    // while(!this.hasSomeoneWon()) {
+    //   for (Player p : this.players) {
+    //     this.play(p);
+    //     this.printCurrentState();
+    //   }
+    // }
   }
 
   // Set up a new game (ask for required parameters)
@@ -214,6 +261,51 @@ public class Game {
     if (w.isWord()) return w;
     Word wEmpty = new Word("");
     return wEmpty;
+  }
+
+  // Génère toutes les combinaisons possibles avec les chaînes passées en arg
+  public ArrayList<String> test(ArrayList<String> t) {
+    String racine;
+    ArrayList<String> ch = new ArrayList<String>();
+    ArrayList<String> h = new ArrayList<String>();
+    ArrayList<String> result = new ArrayList<String>();
+    LinkedList<String> ret = new LinkedList<String>();
+    int i, a;
+    if (t.size() == 1) return t;
+    else {
+      for (i = 0; i < t.size(); i++) {
+        racine = t.get(i);
+        if (ret.indexOf(racine) < 0) {
+          ret.add( racine );
+          h.clear() ;
+          h.addAll( t);
+          h.remove(i);
+          a = result.size();
+          ch = this.test(h);
+          result.addAll(ch);
+          for (int j = a; j < result.size(); j++) {
+              result.set(j, racine + result.get(j));
+          }
+        }
+      }
+      return result;
+    }
+  }
+
+  // Génère toutes les combinaisons possibles en enlevant une lettre à chaque fois
+  public ArrayList<String> test2(ArrayList<String> list) {
+    ArrayList<String> list2 = new ArrayList<String >();
+    ArrayList<String> res = new ArrayList<String >();
+    int nb = list.size();
+    list2.addAll(list);
+    for (int i = 0; i < nb; i++) {
+      String f = list2.get(0);
+      list2.remove(0);
+      res.addAll(this.test(list2));
+      if (nb > 0) res.addAll(this.test2(list2));
+      list2.add(f);
+    }
+    return res;
   }
 
 }
