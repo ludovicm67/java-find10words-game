@@ -17,8 +17,8 @@ Nous avons utilisé `Maven` pour la gestion du projet.
 Nous travaillons avec un seul package, `com.game`, mais l'ensemble du projet est découpé en différentes classes :
   * `App` : Permet d'initialiser le jeu
   * `Game` : Tout ce qui concerne les mécaniques de jeu, l'évolution de la partie : la classe centrale
-  * `Glados` : pour l'IA
   * `Player` : pour définir chaque joueur (son nom, les mots qu'il a trouvé, ...)
+  * `Pot` : pour gérer le pot commun (ajouter / retirer des lettres du pot, piocher une lettre aléatoire, etc...)
   * `Word` : pour définir un mot, voir s'il est valide, etc...
 
 # Avancement
