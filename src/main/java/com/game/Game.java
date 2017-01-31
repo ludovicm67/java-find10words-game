@@ -54,42 +54,39 @@ public class Game {
   // Verify the word of player
   public void verify(Word word, Player p) {
     if (word.isWord()) {
-      Pot pot = this.pot;
       if (this.verifyFindWord(word, p)) {
         System.out.println("Sorry, you already found this word.");
       } else if (!this.verifyLetters(word.getWord())) {
         System.out.println("Sorry, some letters aren't in the pot.");
-      } else if (this.charInString('-', word.getWord())) {
-          System.out.println("Good job ! You found two words at once !");
-          this.removeLetters(word.doubleWords()[0].getWord());
-          this.removeLetters(word.doubleWords()[1].getWord());
-          Word word1 = word.doubleWords()[0];
-          Word word2 = word.doubleWords()[1];
-          p.addWord(word1);
-          p.addWord(word2);
-          pot.pickChar();
-      } else if (this.wordInWord(word, p)) {
-        System.out.println("Good job ! You found a word and you stole a word from a player !");
-        this.removeLetters(word.getWord());
-        p.addWord(word);
-        pot.pickChar();
-      } else {
-        System.out.println("Good job !");
-        this.removeLetters(word.getWord());
-        p.addWord(word);
-        pot.pickChar();
-      }
+      } else if (this.charInString('-', word.getWord())) this.verifyFoundDoubleWords(word, p);
+      else if (this.wordInWord(word, p)) this.verifyStolenWord(word, p);
+      else this.verifyFoundWord(word, p);
     } else System.out.println("Sorry, isn't a word.");
   }
 
-  // remove letters in pot
-  public void removeLetters(String chain) {
-    this.pot.remove(chain);
+  public void verifyFoundDoubleWords(Word word, Player p) {
+    System.out.println("Good job ! You found two words at once !");
+    this.pot.remove(word.doubleWords()[0].getWord());
+    this.pot.remove(word.doubleWords()[1].getWord());
+    Word word1 = word.doubleWords()[0];
+    Word word2 = word.doubleWords()[1];
+    p.addWord(word1);
+    p.addWord(word2);
+    this.pot.pickChar();
   }
 
-  // Verify if char in the pot
-  public boolean verifyCharInPot(char c) {
-    return this.pot.contains(c);
+  public void verifyStolenWord(Word word, Player p) {
+    System.out.println("Good job ! You found a word and you stole a word from a player !");
+    this.pot.remove(word.getWord());
+    p.addWord(word);
+    this.pot.pickChar();
+  }
+
+  public void verifyFoundWord(Word word, Player p) {
+    System.out.println("Good job !");
+    this.pot.remove(word.getWord());
+    p.addWord(word);
+    this.pot.pickChar();
   }
 
   // Verify if letters of word are in the pot
@@ -100,7 +97,7 @@ public class Game {
         int nb = (int) (chain.charAt(i));
         c = (char) (nb - 32);
       } else c = '-';
-      if(!verifyCharInPot(c)) return false;
+      if(!this.pot.contains(c)) return false;
     }
     return true;
   }
