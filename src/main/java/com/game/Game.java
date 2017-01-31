@@ -14,15 +14,16 @@ public class Game {
   // Initialize a new game
   public void start() {
     this.setUp();
-    for (Player p : this.players) {
-      System.out.println(
-        p.getName() + " has picked the letter " + this.pot.pickChar()
-      );
-    }
-    while(!this.hasSomeoneWon()) {
+    for (Player p : this.players) System.out.println(p.getName() + " has picked the letter " + this.pot.pickChar());
+    boolean hasEnded = false;
+    while(!hasEnded) {
       for (Player p : this.players) {
         this.play(p);
         this.printCurrentState();
+        if(this.hasSomeoneWon()) {
+          hasEnded = true;
+          break;
+        }
       }
     }
   }
