@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
 
 // Public class which describe the game
 public class Game {
@@ -149,17 +150,70 @@ public class Game {
     System.out.println("\n\n\033[0;1mIt's " + p.getName() + "'s turn.\033[0m");
     this.pot.pickChar(2);
     this.pot.print();
-    System.out.println("Do you want to do a word ? (yes/no)");
-    String answer = rep.next();
-    if (answer.equals("yes")) {
-      System.out.print("Please write the word : ");
-      String w = rep.next();
-      w = w.toLowerCase();
-      Word word = new Word(w);
-      this.verify(word, p);
+    if(p.isIA()) {
+      this.playIA(p);
     } else {
-      System.out.println("Next turn.");
+      System.out.println("Do you want to do a word ? (yes/no)");
+      String answer = rep.next();
+      if (answer.equals("yes")) {
+        System.out.print("Please write the word : ");
+        String w = rep.next();
+        w = w.toLowerCase();
+        Word word = new Word(w);
+        this.verify(word, p);
+      } else {
+        System.out.println("Next turn.");
+      }
     }
+  }
+
+  public void playIA(Player p) {
+    System.out.println("Je réfléchie...");
+
+    ArrayList<String> po=new ArrayList<String >();
+    ArrayList<String> pan= new ArrayList<String >();
+
+    Pot potIA = new Pot();
+    potIA.addAll(this.pot.getContent());
+
+    while(potIA.size() > 5) {
+      Random r = new Random();
+      int indiceToRemove = 0 + r.nextInt(potIA.size());
+      potIA.remove("" + potIA.getContent().get(indiceToRemove));
+    }
+
+    // Tranforme les lettres du pot commun en String en minuscule
+    for (Character letter : potIA.getContent()) {
+      po.add("" + Character.toLowerCase(letter));
+    }
+
+    pan = this.test(po); // n
+    if (po.size() > 0) pan.addAll(this.test2(po));
+
+    // Permet de virer tous les doublons
+    Object[] st = pan.toArray();
+    for (Object s : st) {
+      if (pan.indexOf(s) != pan.lastIndexOf(s)) {
+          pan.remove(pan.lastIndexOf(s));
+       }
+    }
+
+    String res = "";
+    for (int i = 0; i < pan.size(); i++) {
+      Word test = new Word(pan.get(i));
+      if(test.isWord()) {
+        res = test.getWord();
+        break;
+      }
+    }
+    if(res == "") {
+      System.out.println("Je n'ai rien à proposer...");
+    } else {
+      System.out.println("Je propose : " + res);
+      Word word = new Word(res);
+      this.verify(word, p);
+    }
+    System.out.println("Au suivant !");
   }
 
   // test if a char is in a string

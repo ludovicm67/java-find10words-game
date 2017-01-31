@@ -22,6 +22,11 @@ public class Pot {
     this.content.add(c);
   }
 
+  // Add many chars in the pot
+  public void addAll(List<Character> c) {
+    this.content.addAll(c);
+  }
+
   // Remove letters from the pot
   public void remove(String chain) {
     for (int i = 0; i < chain.length(); i++) {
