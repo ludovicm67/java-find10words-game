@@ -11,41 +11,10 @@ public class Game {
   private List<Player> players = new ArrayList<Player>();
   private Pot pot = new Pot();
 
-  private List<Word> pieceofword; // for Glados
+  // private List<Word> pieceofword; // for Glados
 
   // Initialize a new game
   public void start() {
-
-    // this.pot.add('A');
-    // this.pot.add('B');
-    // this.pot.add('C');
-    // this.pot.add('D');
-
-    // ArrayList<String> po=new ArrayList<String >();
-    // ArrayList<String> po2=new ArrayList<String >();
-    // ArrayList<String> pan= new ArrayList<String >();
-
-    // // Tranforme les lettres du pot commun en String en minuscule
-    // for (Character letter : this.pot.getContent()) {
-    //   po.add("" + Character.toLowerCase(letter));
-    // }
-
-    // pan = this.test(po); // n
-    // if (po.size() > 0) pan.addAll(this.test2(po));
-
-    // // Permet de virer tous les doublons
-    // Object[] st = pan.toArray();
-    // for (Object s : st) {
-    //   if (pan.indexOf(s) != pan.lastIndexOf(s)) {
-    //       pan.remove(pan.lastIndexOf(s));
-    //    }
-    // }
-
-    // for (int i = 0; i < pan.size(); i++) {
-    //   System.out.println(pan.get(i));
-    // }
-    // System.out.println(pan.size());
-
     this.setUp();
     for (Player p : this.players) {
       System.out.println(
@@ -168,15 +137,15 @@ public class Game {
   }
 
   public void playIA(Player p) {
-    System.out.println("Je réfléchie...");
+    System.out.println("Je réfléchis...");
 
-    ArrayList<String> po=new ArrayList<String >();
-    ArrayList<String> pan= new ArrayList<String >();
+    ArrayList<String> po = new ArrayList<String >();
+    ArrayList<String> pan = new ArrayList<String >();
 
     Pot potIA = new Pot();
     potIA.addAll(this.pot.getContent());
 
-    while(potIA.size() > 5) {
+    while (potIA.size() > 5) {
       Random r = new Random();
       int indiceToRemove = 0 + r.nextInt(potIA.size());
       potIA.remove("" + potIA.getContent().get(indiceToRemove));
@@ -201,12 +170,12 @@ public class Game {
     String res = "";
     for (int i = 0; i < pan.size(); i++) {
       Word test = new Word(pan.get(i));
-      if(test.isWord()) {
+      if (test.isWord()) {
         res = test.getWord();
         break;
       }
     }
-    if(res == "") {
+    if (res == "") {
       System.out.println("Je n'ai rien à proposer...");
     } else {
       System.out.println("Je propose : " + res);
@@ -279,28 +248,28 @@ public class Game {
   }
 
   // Try to do a word (for Glados)
-  public Word makeWord() {
-    Word wd = new Word();
-    this.pieceofword = new ArrayList<Word>();
-    int i = 0;
-    String word = "";
-    for (Character letter : this.pot.getContent()) {
-      System.out.println("plop");
-      if (wd.searchWordinDico(letter, i)) {
-        word += letter;
-        System.out.println(word);
-      }
-      i++;
-    }
-    for (Word mot : this.pieceofword) {
-      System.out.println(mot);
-    }
-    Word w = new Word(word);
-    this.pieceofword.add(w);
-    if (w.isWord()) return w;
-    Word wEmpty = new Word("");
-    return wEmpty;
-  }
+  // public Word makeWord() {
+  //   Word wd = new Word();
+  //   this.pieceofword = new ArrayList<Word>();
+  //   int i = 0;
+  //   String word = "";
+  //   for (Character letter : this.pot.getContent()) {
+  //     System.out.println("plop");
+  //     if (wd.searchWordinDico(letter, i)) {
+  //       word += letter;
+  //       System.out.println(word);
+  //     }
+  //     i++;
+  //   }
+  //   for (Word mot : this.pieceofword) {
+  //     System.out.println(mot);
+  //   }
+  //   Word w = new Word(word);
+  //   this.pieceofword.add(w);
+  //   if (w.isWord()) return w;
+  //   Word wEmpty = new Word("");
+  //   return wEmpty;
+  // }
 
   // Génère toutes les combinaisons possibles avec les chaînes passées en arg
   public ArrayList<String> test(ArrayList<String> t) {
