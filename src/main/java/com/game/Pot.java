@@ -45,7 +45,13 @@ public class Pot {
   // Get a random char
   public char randomChar() {
     Random r = new Random();
-    return (char) (65 + r.nextInt(26));
+    int nb = r.nextInt(46);
+    if (nb < 26) return (char) (65 + nb);
+    else if(nb < 30) return 'E';
+    else if(nb < 36) return 'A';
+    else if(nb < 40) return 'I';
+    else if(nb < 44) return 'O';
+    else return 'U';
   }
 
   // Pick a random char (A-Z) and put it in the pot

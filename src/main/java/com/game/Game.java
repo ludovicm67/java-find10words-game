@@ -11,8 +11,6 @@ public class Game {
   private List<Player> players = new ArrayList<Player>();
   private Pot pot = new Pot();
 
-  // private List<Word> pieceofword; // for Glados
-
   // Initialize a new game
   public void start() {
     this.setUp();

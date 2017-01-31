@@ -24,7 +24,7 @@ Nous travaillons avec un seul package, `com.game`, mais l'ensemble du projet est
 # Avancement
 
   * Règles du jeu : 9 /12
-  * Objectifs du TP : 3 /5
+  * Objectifs du TP : 4 /5
   * *Technologies à utiliser : 4 /4*
 
 # Règles du jeu
@@ -55,7 +55,7 @@ Nous travaillons avec un seul package, `com.game`, mais l'ensemble du projet est
   * Une interface en ligne de commande est suffisante.
   * Nous attendons aussi a minima une de ces deux extensions (ou les deux pour les plus courageux) :
     * *Une architecture client/serveur, chaque joueur utilisant une instance d'un client pour jouer.*
-    * **Une intelligence artificielle permettant de jouer contre l'ordinateur** (notre choix)
+    * Une intelligence artificielle permettant de jouer contre l'ordinateur (notre choix)
   * Nous attendons aussi une description de votre architecture (quelle responsabilité à chaque package,...)
   * **A répondre dans le README.md : illustrer 3 principes SOLID ou design pattern en quelques paragraphes seulement en utilisant vos propres classes, en espliquant pourquoi avoir utilisé ce design pattern/principe, ce que cela vous a apporté et comment l'avez-vous appliqué**
 
