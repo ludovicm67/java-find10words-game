@@ -15,63 +15,48 @@ public class Game {
   // Initialize a new game
   public void start() {
 
+    // this.pot.add('A');
+    // this.pot.add('B');
+    // this.pot.add('C');
+    // this.pot.add('D');
 
+    // ArrayList<String> po=new ArrayList<String >();
+    // ArrayList<String> po2=new ArrayList<String >();
+    // ArrayList<String> pan= new ArrayList<String >();
 
-    this.pot.add('A');
-    this.pot.add('B');
-    this.pot.add('C');
-    this.pot.add('D');
-    this.pot.add('E');
-    this.pot.add('F');
-
-    ArrayList<String> po=new ArrayList<String >();
-    ArrayList<String> po2=new ArrayList<String >();
-    ArrayList<String> pan= new ArrayList<String >();
-
-
-
-    // Tranforme les lettres du pot commun en String en minuscule
-    for (Character letter : this.pot.getContent()) {
-      po.add("" + Character.toLowerCase(letter));
-    }
-
-    pan = this.test(po); // n
-    if (po.size() > 0) pan.addAll(this.test2(po));
-
-    // Permet de virer tous les doublons
-    Object[] st = pan.toArray();
-    for (Object s : st) {
-      if (pan.indexOf(s) != pan.lastIndexOf(s)) {
-          pan.remove(pan.lastIndexOf(s));
-       }
-    }
-
-    // int nb = po.size();
-    // po2.addAll(po); // n-1
-    // for (int i = 0; i < nb; i++) {
-    //   String f = po2.get(0);
-    //   po2.remove(0);
-    //   pan.addAll(this.test(po2));
-    //   pan.addAll(this.test2(po2));
-    //   po2.add(f);
+    // // Tranforme les lettres du pot commun en String en minuscule
+    // for (Character letter : this.pot.getContent()) {
+    //   po.add("" + Character.toLowerCase(letter));
     // }
 
-    for (int i = 0; i < pan.size(); i++) {
-      System.out.println(pan.get(i));
+    // pan = this.test(po); // n
+    // if (po.size() > 0) pan.addAll(this.test2(po));
+
+    // // Permet de virer tous les doublons
+    // Object[] st = pan.toArray();
+    // for (Object s : st) {
+    //   if (pan.indexOf(s) != pan.lastIndexOf(s)) {
+    //       pan.remove(pan.lastIndexOf(s));
+    //    }
+    // }
+
+    // for (int i = 0; i < pan.size(); i++) {
+    //   System.out.println(pan.get(i));
+    // }
+    // System.out.println(pan.size());
+
+    this.setUp();
+    for (Player p : this.players) {
+      System.out.println(
+        p.getName() + " has picked the letter " + this.pot.pickChar()
+      );
     }
-    System.out.println(pan.size());
-    // this.setUp();
-    // for (Player p : this.players) {
-    //   System.out.println(
-    //     p.getName() + " has picked the letter " + this.pot.pickChar()
-    //   );
-    // }
-    // while(!this.hasSomeoneWon()) {
-    //   for (Player p : this.players) {
-    //     this.play(p);
-    //     this.printCurrentState();
-    //   }
-    // }
+    while(!this.hasSomeoneWon()) {
+      for (Player p : this.players) {
+        this.play(p);
+        this.printCurrentState();
+      }
+    }
   }
 
   // Set up a new game (ask for required parameters)
