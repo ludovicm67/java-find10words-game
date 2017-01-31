@@ -45,12 +45,12 @@ public class Pot {
   // Get a random char
   public char randomChar() {
     Random r = new Random();
-    int nb = r.nextInt(46);
+    int nb = r.nextInt(37);
     if (nb < 26) return (char) (65 + nb);
     else if(nb < 30) return 'E';
-    else if(nb < 36) return 'A';
-    else if(nb < 40) return 'I';
-    else if(nb < 44) return 'O';
+    else if(nb < 33) return 'A';
+    else if(nb < 35) return 'I';
+    else if(nb < 36) return 'O';
     else return 'U';
   }
 
