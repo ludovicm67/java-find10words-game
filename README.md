@@ -23,9 +23,7 @@ Nous travaillons avec un seul package, `com.game`, mais l'ensemble du projet est
 
 # Avancement
 
-  * Règles du jeu : 9 /12
-  * Objectifs du TP : 4 /5
-  * *Technologies à utiliser : 4 /4*
+  * Règles du jeu : 10 /12
 
 # Règles du jeu
 
@@ -37,7 +35,7 @@ Nous travaillons avec un seul package, `com.game`, mais l'ensemble du projet est
     * **Le joueur qui a tiré la lettre la plus petite dans l'alphabet commence**
     * Chaque fois que c'est le début du tour d'un joueur, il tire deux lettres aléatoires qu'il rajoute au pot commun
     * Chaque fois qu'un joueur fait un mot, il tire une lettre aléatoire qu'il rajoute au pot commun
-    * **Quand le joueur ne trouve plus de mots, il passe et le joueur suivant commence son tour (par tirer 2 lettres qu'il rajoute au pot commun)**
+    * Quand le joueur ne trouve plus de mots, il passe et le joueur suivant commence son tour (par tirer 2 lettres qu'il rajoute au pot commun)
 
   * Comment faire un mot ?
     * En utilisant uniquement les lettres du pot commun
@@ -57,7 +55,7 @@ Nous travaillons avec un seul package, `com.game`, mais l'ensemble du projet est
     * *Une architecture client/serveur, chaque joueur utilisant une instance d'un client pour jouer.*
     * Une intelligence artificielle permettant de jouer contre l'ordinateur (notre choix)
   * Nous attendons aussi une description de votre architecture (quelle responsabilité à chaque package,...)
-  * **A répondre dans le README.md : illustrer 3 principes SOLID ou design pattern en quelques paragraphes seulement en utilisant vos propres classes, en espliquant pourquoi avoir utilisé ce design pattern/principe, ce que cela vous a apporté et comment l'avez-vous appliqué**
+  * A répondre dans le README.md : illustrer 3 principes SOLID ou design pattern en quelques paragraphes seulement en utilisant vos propres classes, en espliquant pourquoi avoir utilisé ce design pattern/principe, ce que cela vous a apporté et comment l'avez-vous appliqué
 
 # Technologies à utiliser
 

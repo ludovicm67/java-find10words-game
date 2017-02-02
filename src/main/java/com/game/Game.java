@@ -61,7 +61,7 @@ public class Game {
   }
 
   // Verify the word of player
-  public void verify(Word word, Player p) {
+  public boolean verify(Word word, Player p) {
     if (word.isWord()) {
       if (this.verifyFindWord(word, p)) {
         System.out.println("Sorry, you already found this word.");
@@ -70,7 +70,11 @@ public class Game {
       } else if (this.charInString('-', word.getWord())) this.verifyFoundDoubleWords(word, p);
       else if (this.wordInWord(word, p)) this.verifyStolenWord(word, p);
       else this.verifyFoundWord(word, p);
-    } else System.out.println("Sorry, isn't a word.");
+      return true;
+    } else {
+      System.out.println("Sorry, isn't a word.");
+      return false;
+    }
   }
 
   public void verifyFoundDoubleWords(Word word, Player p) {
@@ -121,25 +125,30 @@ public class Game {
 
   // Allow to one player to play
   public void play(Player p) {
-    Scanner rep = new Scanner(System.in);
     System.out.println("\n\n\033[0;1mIt's " + p.getName() + "'s turn.\033[0m");
     this.pot.pickChar(2);
     this.pot.print();
     if (p.isIA() && p.getName().equals("R2-D2 [IA]")) this.playr2d2IA(p);
     else if (p.isIA() && p.getName().equals("Glados [IA]")) this.playGladosIA(p);
-    else {
-      System.out.println("Do you want to do a word ? (yes/no)");
-      String answer = rep.next();
-      if (answer.equals("yes")) {
-        System.out.print("Please write the word : ");
-        String w = rep.next();
-        w = w.toLowerCase();
-        Word word = new Word(w);
-        this.verify(word, p);
-      } else {
-        System.out.println("Next turn.");
+    else this.playHuman(p);
+  }
+
+  public void playHuman(Player p) {
+    Scanner rep = new Scanner(System.in);
+    System.out.println("Do you want to do a word ? (yes/no)");
+    String answer = rep.next();
+    if (answer.equals("yes")) {
+      System.out.print("Please write the word : ");
+      String w = rep.next();
+      w = w.toLowerCase();
+      Word word = new Word(w);
+      boolean testVerif;
+      testVerif = this.verify(word, p);
+      if (testVerif) {
+        this.pot.print();
+        this.playHuman(p);
       }
-    }
+    } else System.out.println("Next turn.");
   }
 
   public void playr2d2IA(Player p) {
