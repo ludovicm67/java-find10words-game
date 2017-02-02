@@ -38,12 +38,6 @@ public class Game {
     }
   }
 
-  public void swapPlayer(Player p1, Player p2){
-    Player playerTmp = p1;
-    p1=p2;
-    p2=playerTmp;
-  }
-
   // Set up a new game (ask for required parameters)
   public void setUp() {
     Scanner sc = new Scanner(System.in);
@@ -243,13 +237,12 @@ public class Game {
     for (Player player : this.players) {
       if (player != p) {
         for (Word word : player.getWords()) {
-          if (w.getWord().length() > word.getWord().length()
-              && w.getWord().contains(word.getWord())) {
+          if (w.getWord().length() > word.getWord().length() && w.getWord().contains(word.getWord())) {
             player.removeWord(word);
             return true;
           }
         }
-      }
+      } else for (Word word : player.getWords()) if (w.getWord().length() > word.getWord().length() && w.getWord().contains(word.getWord())) return true;
     }
     return false;
   }

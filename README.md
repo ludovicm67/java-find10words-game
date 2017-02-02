@@ -21,10 +21,6 @@ Nous travaillons avec un seul package, `com.game`, mais l'ensemble du projet est
   * `Pot` : pour gérer le pot commun (ajouter / retirer des lettres du pot, piocher une lettre aléatoire, etc...)
   * `Word` : pour définir un mot, voir s'il est valide, etc...
 
-# Avancement
-
-  * Règles du jeu : 10 /12
-
 # Règles du jeu
 
   * Objectif du jeu :
@@ -32,7 +28,7 @@ Nous travaillons avec un seul package, `com.game`, mais l'ensemble du projet est
 
   * Déroulement du jeu :
     * Chacun des joueurs tire une lettre aléatoire d'un sac, et les mettent au milieu dans le pot commun
-    * **Le joueur qui a tiré la lettre la plus petite dans l'alphabet commence**
+    * Le joueur qui a tiré la lettre la plus petite dans l'alphabet commence
     * Chaque fois que c'est le début du tour d'un joueur, il tire deux lettres aléatoires qu'il rajoute au pot commun
     * Chaque fois qu'un joueur fait un mot, il tire une lettre aléatoire qu'il rajoute au pot commun
     * Quand le joueur ne trouve plus de mots, il passe et le joueur suivant commence son tour (par tirer 2 lettres qu'il rajoute au pot commun)
@@ -40,7 +36,7 @@ Nous travaillons avec un seul package, `com.game`, mais l'ensemble du projet est
   * Comment faire un mot ?
     * En utilisant uniquement les lettres du pot commun
     * En prennant un mot de ces adversaires (toutes les lettres du mot) et en lui rajoutant des lettres du pot commun
-    * **En rallongeant un de ses mots avec des lettres du pot commun ou en utilisant un autre mot (toutes les lettres)**
+    * En rallongeant un de ses mots avec des lettres du pot commun ou en utilisant un autre mot (toutes les lettres)
     * Attention seul les noms communs sont autorisés
 
   * Pour faciliter :
