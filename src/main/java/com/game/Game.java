@@ -348,7 +348,7 @@ public class Game {
     potCopy.addAll(this.pot.getContent());
     Word mot = this.makeWord(potCopy);
     int i = 0;
-    while (!(mot.isWord()) && (i<potCopy.size())) {
+    while (!mot.isWord() && i < potCopy.size()) {
       potCopy.remove("" + potCopy.getContent().get(0));
       mot = this.makeWord(potCopy);
       i++;
