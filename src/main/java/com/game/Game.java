@@ -14,7 +14,20 @@ public class Game {
   // Initialize a new game
   public void start() {
     this.setUp();
-    for (Player p : this.players) System.out.println(p.getName() + " has picked the letter " + this.pot.pickChar());
+    char cMin='Z';
+    List<Player> players2 = new ArrayList<Player>();
+    for (Player p : this.players) {
+      char c=this.pot.pickChar();
+      System.out.println(p.getName() + " has picked the letter " + c);
+      if (c<cMin){
+        c=cMin;
+        players2.add(0, p);
+      }
+      else{
+        players2.add(p);
+      }
+    }
+    this.players=players2;
     boolean hasEnded = false;
     while(!hasEnded) {
       for (Player p : this.players) {
@@ -26,6 +39,12 @@ public class Game {
         }
       }
     }
+  }
+
+  public void swapPlayer(Player p1, Player p2){
+    Player playerTmp = p1;
+    p1=p2;
+    p2=playerTmp;
   }
 
   // Set up a new game (ask for required parameters)
