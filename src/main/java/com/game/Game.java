@@ -176,7 +176,7 @@ public class Game {
     return potIA;
   }
 
-  public String toPlayR2D2(ArrayList<String> potFinal, ArrayList<String> potTemp){
+  public String toPlayR2D2(ArrayList<String> potFinal, ArrayList<String> potTemp) {
     if (potTemp.size() > 0) potFinal.addAll(this.r2d2SubAnagramme(potTemp));
     Object[] st = potFinal.toArray();
     for (Object s : st) if (potFinal.indexOf(s) != potFinal.lastIndexOf(s)) potFinal.remove(potFinal.lastIndexOf(s));
@@ -198,7 +198,7 @@ public class Game {
     ArrayList<String> potFinal = new ArrayList<String>();
     for (Character letter : potIA.getContent()) potTemp.add("" + Character.toLowerCase(letter));
     potFinal = this.r2d2Anagramme(potTemp);
-    String res=this.toPlayR2D2(potFinal, potTemp);;
+    String res = this.toPlayR2D2(potFinal, potTemp);
     this.playIA(p, res);
   }
 
@@ -360,7 +360,7 @@ public class Game {
     potCopy.addAll(this.pot.getContent());
     Word mot = this.makeWord(potCopy);
     int i = 0;
-    while (!(mot.isWord()) && (i<potCopy.size())) {
+    while (!mot.isWord() && i < potCopy.size()) {
       potCopy.remove("" + potCopy.getContent().get(0));
       mot = this.makeWord(potCopy);
       i++;
