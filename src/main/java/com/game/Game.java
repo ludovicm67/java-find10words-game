@@ -17,15 +17,12 @@ public class Game {
     char cMin='Z';
     List<Player> players2 = new ArrayList<Player>();
     for (Player p : this.players) {
-      char c=this.pot.pickChar();
+      char c = this.pot.pickChar();
       System.out.println(p.getName() + " has picked the letter " + c);
-      if (c<cMin){
-        c=cMin;
+      if (c < cMin) {
+        cMin = c;
         players2.add(0, p);
-      }
-      else{
-        players2.add(p);
-      }
+      } else players2.add(p);
     }
     this.players=players2;
     boolean hasEnded = false;
