@@ -35,4 +35,11 @@ public class WordTest {
     assertThat(ws[1].getWord()).isEqualTo("monde");
   }
 
+  @Test
+  public void testSearchWordinDico() {
+    Word w = new Word();
+    assertThat(w.searchWordinDico("test")).isTrue();
+    assertThat(w.searchWordinDico("test-false")).isFalse();
+  }
+
 }
