@@ -34,6 +34,9 @@ public class Game {
     System.out.print("Do you want to play with Glados, an IA ? (yes/no) : ");
     String answer = sc.next();
     if (answer.equals("yes")) this.addGlados();
+    System.out.print("Do you want to play with R2-D2, an IA ? (yes/no) : ");
+    answer = sc.next();
+    if (answer.equals("yes")) this.addR2d2();
     System.out.print("How many (human) players ? ");
     int nbPlayers = sc.nextInt();
     for (int i = 0; i < nbPlayers; i++) {
@@ -46,6 +49,13 @@ public class Game {
   // Add Glados IA
   public void addGlados() {
     Player glados = new Player("Glados [IA]");
+    glados.setIA();
+    this.addPlayer(glados);
+  }
+
+  // Add R2D2 IA
+  public void addR2d2() {
+    Player glados = new Player("R2-D2 [IA]");
     glados.setIA();
     this.addPlayer(glados);
   }
@@ -115,9 +125,9 @@ public class Game {
     System.out.println("\n\n\033[0;1mIt's " + p.getName() + "'s turn.\033[0m");
     this.pot.pickChar(2);
     this.pot.print();
-    if(p.isIA()) {
-      this.playIA(p);
-    } else {
+    if (p.isIA() && p.getName().equals("R2-D2 [IA]")) this.playr2d2IA(p);
+    else if (p.isIA() && p.getName().equals("Glados [IA]")) this.playGladosIA(p);
+    else {
       System.out.println("Do you want to do a word ? (yes/no)");
       String answer = rep.next();
       if (answer.equals("yes")) {
@@ -132,8 +142,8 @@ public class Game {
     }
   }
 
-  public void playIA(Player p) {
-    System.out.println("Je réfléchis...");
+  public void playr2d2IA(Player p) {
+    System.out.println("I'm thinking...");
 
     ArrayList<String> po = new ArrayList<String >();
     ArrayList<String> pan = new ArrayList<String >();
@@ -152,8 +162,8 @@ public class Game {
       po.add("" + Character.toLowerCase(letter));
     }
 
-    pan = this.test(po); // n
-    if (po.size() > 0) pan.addAll(this.test2(po));
+    pan = this.r2d2Anagramme(po);
+    if (po.size() > 0) pan.addAll(this.r2d2SubAnagramme(po));
 
     // Permet de virer tous les doublons
     Object[] st = pan.toArray();
@@ -171,14 +181,27 @@ public class Game {
         break;
       }
     }
-    if (res == "") {
-      System.out.println("Je n'ai rien à proposer...");
+    if (res.equals("")) {
+      System.out.println("I have nothing to propose...");
     } else {
-      System.out.println("Je propose : " + res);
+      System.out.println("I propose : " + res);
       Word word = new Word(res);
       this.verify(word, p);
     }
-    System.out.println("Au suivant !");
+    System.out.println("Next!");
+  }
+
+  public void playGladosIA(Player p) {
+    System.out.println("I'm thinking...");
+    String res = this.tourGlados().getWord();
+    if (res.equals("")) {
+      System.out.println("I have nothing to propose...");
+    } else {
+      System.out.println("I propose : " + res);
+      Word word = new Word(res);
+      this.verify(word, p);
+    }
+    System.out.println("Next!");
   }
 
   // test if a char is in a string
@@ -243,32 +266,8 @@ public class Game {
     System.out.println("============= END =============");
   }
 
-  // Try to do a word (for Glados)
-  // public Word makeWord() {
-  //   Word wd = new Word();
-  //   this.pieceofword = new ArrayList<Word>();
-  //   int i = 0;
-  //   String word = "";
-  //   for (Character letter : this.pot.getContent()) {
-  //     System.out.println("plop");
-  //     if (wd.searchWordinDico(letter, i)) {
-  //       word += letter;
-  //       System.out.println(word);
-  //     }
-  //     i++;
-  //   }
-  //   for (Word mot : this.pieceofword) {
-  //     System.out.println(mot);
-  //   }
-  //   Word w = new Word(word);
-  //   this.pieceofword.add(w);
-  //   if (w.isWord()) return w;
-  //   Word wEmpty = new Word("");
-  //   return wEmpty;
-  // }
-
   // Génère toutes les combinaisons possibles avec les chaînes passées en arg
-  public ArrayList<String> test(ArrayList<String> t) {
+  public ArrayList<String> r2d2Anagramme(ArrayList<String> t) {
     String racine;
     ArrayList<String> ch = new ArrayList<String>();
     ArrayList<String> h = new ArrayList<String>();
@@ -285,7 +284,7 @@ public class Game {
           h.addAll( t);
           h.remove(i);
           a = result.size();
-          ch = this.test(h);
+          ch = this.r2d2Anagramme(h);
           result.addAll(ch);
           for (int j = a; j < result.size(); j++) {
               result.set(j, racine + result.get(j));
@@ -297,7 +296,7 @@ public class Game {
   }
 
   // Génère toutes les combinaisons possibles en enlevant une lettre à chaque fois
-  public ArrayList<String> test2(ArrayList<String> list) {
+  public ArrayList<String> r2d2SubAnagramme(ArrayList<String> list) {
     ArrayList<String> list2 = new ArrayList<String >();
     ArrayList<String> res = new ArrayList<String >();
     int nb = list.size();
@@ -305,11 +304,49 @@ public class Game {
     for (int i = 0; i < nb; i++) {
       String f = list2.get(0);
       list2.remove(0);
-      res.addAll(this.test(list2));
-      if (nb > 0) res.addAll(this.test2(list2));
+      res.addAll(this.r2d2Anagramme(list2));
+      if (nb > 0) res.addAll(this.r2d2SubAnagramme(list2));
       list2.add(f);
     }
     return res;
+  }
+
+  // Test if a piece of word is in the dico
+  public String testPieceofword(Word wd, String word){
+    if (!(wd.searchWordinDico(word))){
+      word=word.substring(0, word.length()-1);
+    }
+    return word;
+  }
+
+  // Try to do a word (for Glados)
+  public Word makeWord(Pot p) {
+    Word wd = new Word();
+    String word="";
+    for (Character letter : p.getContent()) {
+      word += letter;
+      word = word.toLowerCase();
+      word = this.testPieceofword(wd, word);
+      wd.setWord(word);
+    }
+    return wd;
+  }
+
+  public Word tourGlados() {
+    Pot potCopy = new Pot();
+    potCopy.addAll(this.pot.getContent());
+    Word mot = this.makeWord(potCopy);
+    int i = 0;
+    while (!(mot.isWord()) && (i<potCopy.size())) {
+      potCopy.remove("" + potCopy.getContent().get(0));
+      mot = this.makeWord(potCopy);
+      i++;
+    }
+    if (!(mot.isWord())) {
+      Word empty = new Word("");
+      return empty;
+    }
+    else return mot;
   }
 
 }
