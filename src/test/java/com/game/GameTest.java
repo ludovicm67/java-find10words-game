@@ -78,4 +78,15 @@ public class GameTest {
     assertThat(w.getWord()).isEqualTo("bonjour");
   }
 
+  @Test // indirectly test : verifyFoundDoubleWords() and verifyFoundWord()
+  public void testVerify() {
+    Game g = new Game();
+    Player p = new Player();
+    g.addPlayer(p);
+    Word w = new Word("bonjour"), w2 = new Word("bonjooour"), w3 = new Word("anti-vol");
+    assertThat(g.verify(w, p)).isTrue();
+    assertThat(g.verify(w2, p)).isFalse();
+    assertThat(g.verify(w3, p)).isTrue();
+  }
+
 }
