@@ -143,7 +143,7 @@ public class Game {
     System.out.println("\n\n\033[0;1mIt's " + p.getName() + "'s turn.\033[0m");
     this.pot.pickChar(2);
     this.pot.print();
-    if (p.isIA() && p.getName().equals("R2-D2 [IA]")) this.playr2d2IA(p);
+    if (p.isIA() && p.getName().equals("R2-D2 [IA]")) this.playR2d2IA(p);
     else if (p.isIA() && p.getName().equals("Glados [IA]")) this.playGladosIA(p);
     else this.playHuman(p);
   }
@@ -165,7 +165,7 @@ public class Game {
   }
 
   // retourne un pot de 5 caractères max sur lesquels R2-D2 va travailler
-  public Pot playr2d2IAPotPreaparation() {
+  public Pot playR2d2IAPotPreaparation() {
     Pot potIA = new Pot();
     potIA.addAll(this.pot.getContent());
     while (potIA.size() > 5) {
@@ -191,9 +191,9 @@ public class Game {
     return res;
   }
 
-  public void playr2d2IA(Player p) {
+  public void playR2d2IA(Player p) {
     System.out.println("I'm thinking...");
-    Pot potIA = this.playr2d2IAPotPreaparation();
+    Pot potIA = this.playR2d2IAPotPreaparation();
     ArrayList<String> potTemp = new ArrayList<String>();
     ArrayList<String> potFinal = new ArrayList<String>();
     for (Character letter : potIA.getContent()) potTemp.add("" + Character.toLowerCase(letter));
@@ -287,7 +287,7 @@ public class Game {
     System.out.println("============= END =============");
   }
 
-  public ArrayList<String> applyr2d2Anagramme(ArrayList<String> t, LinkedList<String> ret, ArrayList<String> h , ArrayList<String> ch, ArrayList<String> result, int i){
+  public ArrayList<String> applyR2d2Anagramme(ArrayList<String> t, LinkedList<String> ret, ArrayList<String> h , ArrayList<String> ch, ArrayList<String> result, int i){
         if (ret.indexOf(t.get(i)) < 0) {
           ret.add(t.get(i));
           h.clear();
@@ -312,7 +312,7 @@ public class Game {
     if (t.size() == 1) return t;
     else {
       for (int i = 0; i < t.size(); i++) {
-        result = this.applyr2d2Anagramme(t, ret, h, ch, result, i);
+        result = this.applyR2d2Anagramme(t, ret, h, ch, result, i);
       }
     }
     return result;
