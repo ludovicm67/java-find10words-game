@@ -25,6 +25,11 @@ public class Game {
       } else players2.add(p);
     }
     this.players=players2;
+    this.finish();
+  }
+
+  // finish the game
+  public void finish(){
     boolean hasEnded = false;
     while(!hasEnded) {
       for (Player p : this.players) {
@@ -149,11 +154,9 @@ public class Game {
     String answer = rep.next();
     if (answer.equals("yes")) {
       System.out.print("Please write the word : ");
-      String w = rep.next();
-      w = w.toLowerCase();
+      String w = rep.next().toLowerCase();
       Word word = new Word(w);
-      boolean testVerif;
-      testVerif = this.verify(word, p);
+      boolean testVerif = this.verify(word, p);
       if (testVerif) {
         this.pot.print();
         this.playHuman(p);
