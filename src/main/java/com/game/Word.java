@@ -42,7 +42,7 @@ public class Word {
     return false;
   }
 
-  // Décompose un mot composé en deux
+  // Dissociate a word
   public Word[] doubleWords() {
     String chain = this.getWord(), chain1 = "", chain2 = "";
     if (chain.contains("-")) {
