@@ -29,7 +29,7 @@ public class Game {
   }
 
   // finish the game
-  public void finish(){
+  public void finish() {
     boolean hasEnded = false;
     while(!hasEnded) {
       for (Player p : this.players) {
@@ -164,12 +164,8 @@ public class Game {
     } else System.out.println("Next turn.");
   }
 
-  public void playr2d2IA(Player p) {
-    System.out.println("I'm thinking...");
-
-    ArrayList<String> po = new ArrayList<String >();
-    ArrayList<String> pan = new ArrayList<String >();
-
+  // retourne un pot de 5 caractères max sur lesquels R2-D2 va travailler
+  public Pot playr2d2IAPotPreaparation() {
     Pot potIA = new Pot();
     potIA.addAll(this.pot.getContent());
 
@@ -179,43 +175,37 @@ public class Game {
       potIA.remove("" + potIA.getContent().get(indiceToRemove));
     }
 
-    // Tranforme les lettres du pot commun en String en minuscule
-    for (Character letter : potIA.getContent()) {
-      po.add("" + Character.toLowerCase(letter));
-    }
+    return potIA;
+  }
 
-    pan = this.r2d2Anagramme(po);
-    if (po.size() > 0) pan.addAll(this.r2d2SubAnagramme(po));
-
-    // Permet de virer tous les doublons
-    Object[] st = pan.toArray();
-    for (Object s : st) {
-      if (pan.indexOf(s) != pan.lastIndexOf(s)) {
-          pan.remove(pan.lastIndexOf(s));
-       }
-    }
-
+  public void playr2d2IA(Player p) {
+    System.out.println("I'm thinking...");
+    Pot potIA = this.playr2d2IAPotPreaparation();
+    ArrayList<String> potTemp = new ArrayList<String>();
+    ArrayList<String> potFinal = new ArrayList<String>();
+    for (Character letter : potIA.getContent()) potTemp.add("" + Character.toLowerCase(letter));
+    potFinal = this.r2d2Anagramme(potTemp);
+    if (potTemp.size() > 0) potFinal.addAll(this.r2d2SubAnagramme(potTemp));
+    Object[] st = potFinal.toArray();
+    for (Object s : st) if (potFinal.indexOf(s) != potFinal.lastIndexOf(s)) potFinal.remove(potFinal.lastIndexOf(s));
     String res = "";
-    for (int i = 0; i < pan.size(); i++) {
-      Word test = new Word(pan.get(i));
+    for (int i = 0; i < potFinal.size(); i++) {
+      Word test = new Word(potFinal.get(i));
       if (test.isWord()) {
         res = test.getWord();
         break;
       }
     }
-    if (res.equals("")) {
-      System.out.println("I have nothing to propose...");
-    } else {
-      System.out.println("I propose : " + res);
-      Word word = new Word(res);
-      this.verify(word, p);
-    }
-    System.out.println("Next!");
+    this.playIA(p, res);
   }
 
   public void playGladosIA(Player p) {
     System.out.println("I'm thinking...");
     String res = this.tourGlados().getWord();
+    this.playIA(p, res);
+  }
+
+  public void playIA(Player p, String res) {
     if (res.equals("")) {
       System.out.println("I have nothing to propose...");
     } else {
@@ -300,21 +290,21 @@ public class Game {
       for (i = 0; i < t.size(); i++) {
         racine = t.get(i);
         if (ret.indexOf(racine) < 0) {
-          ret.add( racine );
+          ret.add(racine);
           h.clear() ;
           h.addAll( t);
           h.remove(i);
           a = result.size();
           ch = this.r2d2Anagramme(h);
           result.addAll(ch);
-          for (int j = a; j < result.size(); j++) {
-              result.set(j, racine + result.get(j));
-          }
+          for (int j = a; j < result.size(); j++) result.set(j, racine + result.get(j));
         }
       }
       return result;
     }
   }
+
+
 
   // Génère toutes les combinaisons possibles en enlevant une lettre à chaque fois
   public ArrayList<String> r2d2SubAnagramme(ArrayList<String> list) {
