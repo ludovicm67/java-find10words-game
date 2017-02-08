@@ -73,12 +73,11 @@ public class Game {
   // Verify the word of player
   public boolean verify(Word word, Player p) {
     if (word.isWord()) {
-      if (this.verifyFindWord(word, p)) {
-        System.out.println("Sorry, you already found this word.");
-      } else if (!this.verifyLetters(word.getWord())) {
+      if (this.verifyFindWord(word, p)) System.out.println("Sorry, you already found this word.");
+      else if (this.wordInWord(word, p)) this.verifyStolenWord(word, p);
+      else if (!this.verifyLetters(word.getWord())) {
         System.out.println("Sorry, some letters aren't in the pot.");
       } else if (this.charInString('-', word.getWord())) this.verifyFoundDoubleWords(word, p);
-      else if (this.wordInWord(word, p)) this.verifyStolenWord(word, p);
       else this.verifyFoundWord(word, p);
       return true;
     } else {
@@ -235,14 +234,15 @@ public class Game {
   // test if word of one player is in word of other player
   public boolean wordInWord(Word w, Player p) {
     for (Player player : this.players) {
-      if (player != p) {
-        for (Word word : player.getWords()) {
-          if (w.getWord().length() > word.getWord().length() && w.getWord().contains(word.getWord())) {
+      for (Word word : player.getWords()) {
+        if (w.getWord().length() > word.getWord().length() && w.getWord().contains(word.getWord())) {
+          if (player != p) {
             player.removeWord(word);
-            return true;
           }
+          String test = w.getWord().replace(word.getWord(), "");
+          return this.verifyLetters(test);
         }
-      } else for (Word word : player.getWords()) if (w.getWord().length() > word.getWord().length() && w.getWord().contains(word.getWord())) return true;
+      }
     }
     return false;
   }
