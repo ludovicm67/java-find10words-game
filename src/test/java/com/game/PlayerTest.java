@@ -12,7 +12,39 @@ public class PlayerTest {
     assertThat(p.getName()).isEqualTo("John");
   }
 
-  @Test // Checks addWord() and getWords()
+  @Test // Needs getName() to be OK
+  public void testSetName() {
+    Player p = new Player();
+    String name = "John Doe";
+    p.setName(name);
+    assertThat(p.getName()).isEqualTo(name);
+  }
+
+  @Test // test setHuman() and isHuman()
+  public void testHuman() {
+    Player p = new Player();
+
+    // human by default
+    assertThat(p.isHuman()).isTrue();
+
+    // test by setting manually
+    p.setHuman();
+    assertThat(p.isHuman()).isTrue();
+  }
+
+  @Test // test setIA() and isIA()
+  public void testIA() {
+    Player p = new Player();
+
+    // human by default
+    assertThat(p.isIA()).isFalse();
+
+    // test by setting manually
+    p.setIA();
+    assertThat(p.isIA()).isTrue();
+  }
+
+  @Test // Checks addWord(), removeWord() and getWords()
   public void testAddGetWords() {
     Player p = new Player();
     Word w1 = new Word("bonjour"), w2 = new Word("monde");
@@ -20,6 +52,12 @@ public class PlayerTest {
     p.addWord(w2);
     assertThat(p.getWords().get(0).getWord()).isEqualTo("bonjour");
     assertThat(p.getWords().get(1).getWord()).isEqualTo("monde");
+
+    // Test remove
+    assertThat(p.getWords().size()).isEqualTo(2);
+    p.removeWord(w1);
+    assertThat(p.getWords().size()).isEqualTo(1);
+    assertThat(p.getWords().get(0).getWord()).isEqualTo("monde");
   }
 
   @Test

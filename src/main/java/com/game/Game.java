@@ -25,6 +25,11 @@ public class Game {
       } else players2.add(p);
     }
     this.players=players2;
+    this.finish();
+  }
+
+  // finish the game
+  public void finish(){
     boolean hasEnded = false;
     while(!hasEnded) {
       for (Player p : this.players) {
@@ -137,7 +142,7 @@ public class Game {
     System.out.println("\n\n\033[0;1mIt's " + p.getName() + "'s turn.\033[0m");
     this.pot.pickChar(2);
     this.pot.print();
-    if (p.isIA() && p.getName().equals("R2-D2 [IA]")) this.playr2d2IA(p);
+    if (p.isIA() && p.getName().equals("R2-D2 [IA]")) this.playR2d2IA(p);
     else if (p.isIA() && p.getName().equals("Glados [IA]")) this.playGladosIA(p);
     else this.playHuman(p);
   }
@@ -148,11 +153,9 @@ public class Game {
     String answer = rep.next();
     if (answer.equals("yes")) {
       System.out.print("Please write the word : ");
-      String w = rep.next();
-      w = w.toLowerCase();
+      String w = rep.next().toLowerCase();
       Word word = new Word(w);
-      boolean testVerif;
-      testVerif = this.verify(word, p);
+      boolean testVerif = this.verify(word, p);
       if (testVerif) {
         this.pot.print();
         this.playHuman(p);
@@ -160,45 +163,47 @@ public class Game {
     } else System.out.println("Next turn.");
   }
 
-  public void playr2d2IA(Player p) {
-    System.out.println("I'm thinking...");
-
-    ArrayList<String> po = new ArrayList<String >();
-    ArrayList<String> pan = new ArrayList<String >();
-
+  // retourne un pot de 5 caractères max sur lesquels R2-D2 va travailler
+  public Pot playR2d2IAPotPreaparation() {
     Pot potIA = new Pot();
     potIA.addAll(this.pot.getContent());
-
     while (potIA.size() > 5) {
       Random r = new Random();
       int indiceToRemove = 0 + r.nextInt(potIA.size());
       potIA.remove("" + potIA.getContent().get(indiceToRemove));
     }
+    return potIA;
+  }
 
-    // Tranforme les lettres du pot commun en String en minuscule
-    for (Character letter : potIA.getContent()) {
-      po.add("" + Character.toLowerCase(letter));
-    }
-
-    pan = this.r2d2Anagramme(po);
-    if (po.size() > 0) pan.addAll(this.r2d2SubAnagramme(po));
-
-    // Permet de virer tous les doublons
-    Object[] st = pan.toArray();
-    for (Object s : st) {
-      if (pan.indexOf(s) != pan.lastIndexOf(s)) {
-          pan.remove(pan.lastIndexOf(s));
-       }
-    }
-
+  public String toPlayR2D2(ArrayList<String> potFinal, ArrayList<String> potTemp) {
+    if (potTemp.size() > 0) potFinal.addAll(this.r2d2SubAnagramme(potTemp));
+    Object[] st = potFinal.toArray();
+    for (Object s : st) if (potFinal.indexOf(s) != potFinal.lastIndexOf(s)) potFinal.remove(potFinal.lastIndexOf(s));
     String res = "";
-    for (int i = 0; i < pan.size(); i++) {
-      Word test = new Word(pan.get(i));
+    for (int i = 0; i < potFinal.size(); i++) {
+      Word test = new Word(potFinal.get(i));
       if (test.isWord()) {
         res = test.getWord();
         break;
       }
     }
+    return res;
+  }
+
+  public void playR2d2IA(Player p) {
+    System.out.println("I'm thinking...");
+    Pot potIA = this.playR2d2IAPotPreaparation();
+    ArrayList<String> potTemp = new ArrayList<String>();
+    ArrayList<String> potFinal = new ArrayList<String>();
+    for (Character letter : potIA.getContent()) potTemp.add("" + Character.toLowerCase(letter));
+    potFinal = this.r2d2Anagramme(potTemp);
+    String res = this.toPlayR2D2(potFinal, potTemp);
+    this.playIA(p, res);
+  }
+
+  public void playGladosIA(Player p) {
+    System.out.println("I'm thinking...");
+    String res = this.tourGlados().getWord();
     if (res.equals("")) {
       System.out.println("I have nothing to propose...");
     } else {
@@ -209,9 +214,7 @@ public class Game {
     System.out.println("Next!");
   }
 
-  public void playGladosIA(Player p) {
-    System.out.println("I'm thinking...");
-    String res = this.tourGlados().getWord();
+  public void playIA(Player p, String res) {
     if (res.equals("")) {
       System.out.println("I have nothing to propose...");
     } else {
@@ -284,33 +287,35 @@ public class Game {
     System.out.println("============= END =============");
   }
 
+  public ArrayList<String> applyR2d2Anagramme(ArrayList<String> t, LinkedList<String> ret, ArrayList<String> h , ArrayList<String> ch, ArrayList<String> result, int i){
+        if (ret.indexOf(t.get(i)) < 0) {
+          ret.add(t.get(i));
+          h.clear();
+          h.addAll(t);
+          h.remove(i);
+          int a = result.size();
+          ch = this.r2d2Anagramme(h);
+          result.addAll(ch);
+          for (int j = a; j < result.size(); j++) {
+              result.set(j, t.get(i) + result.get(j));
+          }
+        }
+        return result;
+  }
+
   // Génère toutes les combinaisons possibles avec les chaînes passées en arg
   public ArrayList<String> r2d2Anagramme(ArrayList<String> t) {
-    String racine;
     ArrayList<String> ch = new ArrayList<String>();
     ArrayList<String> h = new ArrayList<String>();
     ArrayList<String> result = new ArrayList<String>();
     LinkedList<String> ret = new LinkedList<String>();
-    int i, a;
     if (t.size() == 1) return t;
     else {
-      for (i = 0; i < t.size(); i++) {
-        racine = t.get(i);
-        if (ret.indexOf(racine) < 0) {
-          ret.add( racine );
-          h.clear() ;
-          h.addAll( t);
-          h.remove(i);
-          a = result.size();
-          ch = this.r2d2Anagramme(h);
-          result.addAll(ch);
-          for (int j = a; j < result.size(); j++) {
-              result.set(j, racine + result.get(j));
-          }
-        }
+      for (int i = 0; i < t.size(); i++) {
+        result = this.applyR2d2Anagramme(t, ret, h, ch, result, i);
       }
-      return result;
     }
+    return result;
   }
 
   // Génère toutes les combinaisons possibles en enlevant une lettre à chaque fois
@@ -355,7 +360,7 @@ public class Game {
     potCopy.addAll(this.pot.getContent());
     Word mot = this.makeWord(potCopy);
     int i = 0;
-    while (!(mot.isWord()) && (i<potCopy.size())) {
+    while (!mot.isWord() && i < potCopy.size()) {
       potCopy.remove("" + potCopy.getContent().get(0));
       mot = this.makeWord(potCopy);
       i++;

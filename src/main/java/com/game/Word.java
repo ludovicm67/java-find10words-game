@@ -42,7 +42,7 @@ public class Word {
     return false;
   }
 
-  // Décompose un mot composé en deux
+  // Dissociate a word
   public Word[] doubleWords() {
     String chain = this.getWord(), chain1 = "", chain2 = "";
     if (chain.contains("-")) {
@@ -65,11 +65,7 @@ public class Word {
       while (scanner.hasNextLine()) {
         String line = scanner.nextLine();
         line = line.trim();
-        if(chain.length()<= line.length()){
-          if ((line.substring(0, chain.length()).equals(chain))) {
-            return true;
-          }
-        }
+        if (chain.length()<= line.length() && line.substring(0, chain.length()).equals(chain)) return true;
       }
       scanner.close();
     } catch(Exception e) {

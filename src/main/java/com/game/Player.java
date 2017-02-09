@@ -1,8 +1,6 @@
 package com.game;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.InputStream;
-import java.util.Scanner;
 
 // Public class which describe a player
 public class Player {
